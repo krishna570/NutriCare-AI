@@ -15,3 +15,6 @@ backend/models/
 RAG/chroma_db/
 
 .freebuff/
+
+backend/data/users.json
+backend/chroma_db/
