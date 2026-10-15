@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriCare AI | Smart Nutrition Assistant</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+     <link rel="stylesheet" href="./style.css">
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <div class="brand">
+        <div class="brand-logo">✚</div>
+        <h1>Nutri<span>Care</span> AI</h1>
+    </div>
+
+    <div class="nav-right">
+
+        <div class="status">
+            <div class="status-dot"></div>
+            AI Assistant Online
+        </div>
+
+        <div class="profile" title="Your health profile">
+            <span class="bmi-badge" id="headerBMI">BMI —</span>
+            <span class="avatar">👤</span>
+        </div>
+
+        <button class="nav-menu-btn" id="navMenuBtn" aria-label="Open menu">☰</button>
+
+    </div>
+
+</header>
+
+
+<div class="layout">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="side-title">Workspace</div>
+
+        <div class="menu">
+
+            <button class="active">
+                <span class="menu-icon">⌂</span>
+                Dashboard
+            </button>
+
+            <button onclick="document.getElementById('foodImage').click()">
+                <span class="menu-icon">📷</span>
+                Food Detection
+            </button>
+
+            <button onclick="document.getElementById('bloodReport').click()">
+                <span class="menu-icon">🩸</span>
+                Blood Reports
+            </button>
+
+            <button onclick="document.getElementById('healthReport').click()">
+                <span class="menu-icon">📄</span>
+                Health Reports
+            </button>
+
+            <button onclick="scrollToSteps()">
+                <span class="menu-icon">👟</span>
+                Live Step Tracking
+            </button>
+
+            <button onclick="focusChat()">
+                <span class="menu-icon">🤖</span>
+                AI Assistant
+            </button>
+
+        </div>
+
+        <div class="side-title" style="margin-top:30px;">
+            System
+        </div>
+
+        <div class="menu">
+
+            <button>
+                <span class="menu-icon">⚙</span>
+                Settings
+            </button>
+
+            <button>
+                <span class="menu-icon">ⓘ</span>
+                About NutriCare
+            </button>
+
+        </div>
+
+    </aside>
+
+    <div class="nav-backdrop" id="navBackdrop"></div>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main>
+
+        <section class="welcome">
+
+            <div>
+                <h2>Welcome to <span>NutriCare AI</span></h2>
+                <p>Your intelligent nutrition and health information assistant.</p>
+            </div>
+
+            <div class="date-box" id="currentDate">
+                Loading date...
+            </div>
+
+        </section>
+
+
+        <!-- ================= STATS ================= -->
+
+        <section class="cards">
+
+            <div class="card">
+                <div class="card-label">Today's Calories</div>
+                <div class="card-value">
+                    0 <span>kcal</span>
+                </div>
+                <div class="card-note">Based on analyzed food</div>
+            </div>
+
+            <div class="card">
+                <div class="card-label">Protein</div>
+                <div class="card-value">
+                    0 <span>g</span>
+                </div>
+                <div class="card-note">Daily nutrition tracking</div>
+            </div>
+
+            <div class="card">
+                <div class="card-label">Sugar Intake</div>
+                <div class="card-value">
+                    0 <span>g</span>
+                </div>
+                <div class="card-note">From analyzed meals</div>
+            </div>
+
+            <div class="card">
+                <div class="card-label">Reports</div>
+                <div class="card-value">
+                    0 <span>uploaded</span>
+                </div>
+                <div class="card-note">Your uploaded reports</div>
+            </div>
+
+            <div class="card">
+                <div class="card-label">Today's Steps</div>
+                <div class="card-value">
+                    <span id="dashboardSteps" style="font-size:26px;">0</span> <span>steps</span>
+                </div>
+                <div class="card-note" id="dashboardStepStatus">Step tracker ready</div>
+            </div>
+
+        </section>
+
+
+        <section class="content-grid">
+
+            <!-- ================= LEFT ================= -->
+
+            <div>
+
+                <!-- UPLOAD PANEL -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <h3>Upload & Analyze</h3>
+                            <p>Add food images, health reports, or start live phone step tracking.</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="upload-grid">
+
+                        <!-- FOOD IMAGE -->
+
+                        <label class="upload-box" id="foodUploadBox">
+
+                            <input
+                                type="file"
+                                id="foodImage"
+                                accept="image/*"
+                                onchange="analyzeFoodImage(this)"
+                            >
+
+                            <div class="upload-icon">📷</div>
+
+                            <h4>Food Image</h4>
+
+                            <p>
+                                Upload a photo of your food for
+                                AI-based food detection.
+                            </p>
+
+                            <div class="selected-file" id="foodFile">
+                                No image selected
+                            </div>
+
+                        </label>
+
+
+                        <!-- BLOOD REPORT -->
+
+                        <label class="upload-box">
+
+                            <input
+                                type="file"
+                                id="bloodReport"
+                                accept=".pdf,.jpg,.jpeg,.png"
+                                onchange="handleFile(this, 'bloodFile')"
+                            >
+
+                            <div class="upload-icon">🩸</div>
+
+                            <h4>Blood Sugar Report</h4>
+
+                            <p>
+                                Upload a blood sugar report
+                                for document analysis.
+                            </p>
+
+                            <div class="selected-file" id="bloodFile">
+                                No report selected
+                            </div>
+
+                        </label>
+
+
+                        <!-- GENERAL REPORT -->
+
+                        <label class="upload-box">
+
+                            <input
+                                type="file"
+                                id="healthReport"
+                                accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                                onchange="handleFile(this, 'healthFile')"
+                            >
+
+                            <div class="upload-icon">📄</div>
+
+                            <h4>Health / Nutrition Report</h4>
+
+                            <p>
+                                Upload a nutrition or health
+                                report for AI-assisted analysis.
+                            </p>
+
+                            <div class="selected-file" id="healthFile">
+                                No report selected
+                            </div>
+
+                        </label>
+
+
+                        <!-- NUTRITION DATA -->
+
+                        <label class="upload-box">
+
+                            <input
+                                type="file"
+                                id="nutritionFile"
+                                accept=".xlsx,.xls,.csv,.pdf"
+                                onchange="handleFile(this, 'nutritionFileName')"
+                            >
+
+                            <div class="upload-icon">🥗</div>
+
+                            <h4>Nutrition Dataset</h4>
+
+                            <p>
+                                Add your structured nutrition
+                                dataset for the AI system.
+                            </p>
+
+                            <div class="selected-file" id="nutritionFileName">
+                                No dataset selected
+                            </div>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= FOOD DETECTION RESULT ================= -->
+
+                <div class="panel" id="foodResultPanel" style="display:none; margin-top:20px;">
+
+                    <div class="panel-header">
+                        <div>
+                            <h3>🍽️ Food Detection Result</h3>
+                            <p id="foodResultSubtitle">Analyzing your food image...</p>
+                        </div>
+                        <span id="foodResultBadge" style="font-size:11px; color:var(--cyan);">
+                            ViT MODEL
+                        </span>
+                    </div>
+
+                    <!-- Loading State -->
+                    <div id="foodResultLoading" style="text-align:center; padding:30px 0;">
+                        <div style="font-size:36px; margin-bottom:12px;">🔄</div>
+                        <div style="color:var(--cyan); font-size:14px; font-weight:600;">
+                            NutriCare ViT Model is analyzing your food...
+                        </div>
+                        <div style="color:var(--muted); font-size:12px; margin-top:6px;">
+                            This may take 10–30 seconds on first run while the model loads.
+                        </div>
+                        <div class="food-loading-bar" style="margin-top:16px;">
+                            <div class="food-loading-bar-inner"></div>
+                        </div>
+                    </div>
+
+                    <!-- Result State (hidden until ready) -->
+                    <div id="foodResultContent" style="display:none;">
+
+                        <!-- Preview + Main Result -->
+                        <div style="display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap; margin-bottom:20px;">
+
+                            <!-- Image Preview -->
+                            <div>
+                                <img id="foodPreviewImg"
+                                     src=""
+                                     alt="Uploaded food"
+                                     style="width:130px; height:130px; object-fit:cover;
+                                            border-radius:14px; border:2px solid rgba(255,255,255,0.08);">
+                            </div>
+
+                            <!-- Detected Food Name + Confidence -->
+                            <div style="flex:1; min-width:180px;">
+                                <div style="font-size:11px; color:var(--muted); text-transform:uppercase;
+                                            letter-spacing:1px; margin-bottom:4px;">Detected Food</div>
+                                <div id="foodNameDisplay"
+                                     style="font-size:26px; font-weight:700; color:white;
+                                            line-height:1.2; margin-bottom:10px;">
+                                    —
+                                </div>
+
+                                <!-- Confidence Bar -->
+                                <div style="font-size:11px; color:var(--muted); margin-bottom:4px;">
+                                    Model Confidence
+                                </div>
+                                <div style="background:rgba(255,255,255,0.06); border-radius:6px;
+                                            height:10px; width:100%; overflow:hidden; margin-bottom:4px;">
+                                    <div id="confidenceBar"
+                                         style="height:100%; background: linear-gradient(90deg, #00e5ff, #13a957);
+                                                border-radius:6px; width:0%; transition:width 0.8s ease;">
+                                    </div>
+                                </div>
+                                <div id="confidenceText"
+                                     style="font-size:13px; font-weight:600; color:var(--cyan);">
+                                    0%
+                                </div>
+
+                                <!-- Risk Badges -->
+                                <div id="riskBadges" style="display:flex; gap:6px; flex-wrap:wrap; margin-top:10px;"></div>
+                            </div>
+
+                        </div>
+
+                        <!-- Nutrition Facts Grid -->
+                        <div style="font-size:11px; color:var(--muted); text-transform:uppercase;
+                                    letter-spacing:1px; margin-bottom:10px;">
+                            Estimated Nutrition (per serving)
+                        </div>
+
+                        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:10px; margin-bottom:20px;">
+
+                            <div class="food-stat-box">
+                                <div class="food-stat-value" id="statKcal">—</div>
+                                <div class="food-stat-label">Calories (kcal)</div>
+                            </div>
+
+                            <div class="food-stat-box">
+                                <div class="food-stat-value" id="statProtein">—</div>
+                                <div class="food-stat-label">Protein (g)</div>
+                            </div>
+
+                            <div class="food-stat-box">
+                                <div class="food-stat-value" id="statCarbs">—</div>
+                                <div class="food-stat-label">Carbs (g)</div>
+                            </div>
+
+                            <div class="food-stat-box">
+                                <div class="food-stat-value" id="statFat">—</div>
+                                <div class="food-stat-label">Fat (g)</div>
+                            </div>
+
+                            <div class="food-stat-box">
+                                <div class="food-stat-value" id="statSugar">—</div>
+                                <div class="food-stat-label">Sugar (g)</div>
+                            </div>
+
+                            <div class="food-stat-box">
+                                <div class="food-stat-value" id="statFibre">—</div>
+                                <div class="food-stat-label">Fibre (g)</div>
+                            </div>
+
+                        </div>
+
+                        <!-- Top 5 Alternatives -->
+                        <div style="font-size:11px; color:var(--muted); text-transform:uppercase;
+                                    letter-spacing:1px; margin-bottom:10px;">
+                            Top 5 Predictions
+                        </div>
+
+                        <div id="top5List" style="display:flex; flex-direction:column; gap:6px;"></div>
+
+                        <!-- Analyse Another -->
+                        <button
+                            class="secondary-btn"
+                            style="width:100%; margin-top:18px;"
+                            onclick="document.getElementById('foodImage').click()"
+                        >
+                            📷 Analyse Another Food
+                        </button>
+
+                    </div>
+
+                    <!-- Error State -->
+                    <div id="foodResultError" style="display:none; text-align:center; padding:24px 0;">
+                        <div style="font-size:32px; margin-bottom:10px;">⚠️</div>
+                        <div id="foodErrorMsg" style="color:#ff6b6b; font-size:13px;"></div>
+                        <div style="color:var(--muted); font-size:11px; margin-top:8px;">
+                            Make sure both servers are running and try again.
+                        </div>
+                        <button
+                            class="secondary-btn"
+                            style="margin-top:14px;"
+                            onclick="document.getElementById('foodImage').click()"
+                        >
+                            Try Again
+                        </button>
+                    </div>
+
+                </div>
+
+
+
+                <!-- ================= LIVE STEP TRACKER ================= -->
+                <div class="panel step-panel" id="stepTrackerPanel">
+                    <div class="panel-header">
+                        <div>
+                            <h3>👟 Live Step Tracker</h3>
+                            <p>Allow motion access and walk with your phone to count steps now.</p>
+                        </div>
+                        <span id="stepLiveBadge" style="color:var(--warning);font-size:11px;">
+                            NOT STARTED
+                        </span>
+                    </div>
+
+                    <div class="step-live">
+                        <div class="step-counter">
+                            <div class="step-ring" id="stepRing">
+                                <div class="step-ring-content">
+                                    <div class="step-number" id="stepCount">0</div>
+                                    <div class="step-unit">steps today</div>
+                                </div>
+                            </div>
+                            <div class="step-goal">Daily goal: 8,000 steps</div>
+                            <div class="motion-bars" id="motionBars" aria-label="Live motion signal">
+                                <div class="motion-bar"></div>
+                                <div class="motion-bar"></div>
+                                <div class="motion-bar"></div>
+                                <div class="motion-bar"></div>
+                                <div class="motion-bar"></div>
+                                <div class="motion-bar"></div>
+                                <div class="motion-bar"></div>
+                                <div class="motion-bar"></div>
+                            </div>
+                        </div>
+
+                        <div class="step-controls">
+                            <div class="step-status" id="stepStatus">
+                                📱 Step tracking is off. Tap <b>Allow & Start</b>, permit motion access, and start walking.
+                            </div>
+
+                            <div class="step-metrics">
+                                <div class="step-metric">
+                                    <strong id="stepDistance">0.00</strong>
+                                    <span>KM EST.</span>
+                                </div>
+                                <div class="step-metric">
+                                    <strong id="stepCalories">0</strong>
+                                    <span>KCAL EST.</span>
+                                </div>
+                                <div class="step-metric">
+                                    <strong id="stepSpeed">0</strong>
+                                    <span>STEPS/MIN</span>
+                                </div>
+                            </div>
+
+                            <div class="step-actions">
+                                <button class="primary-btn" id="startStepBtn" onclick="startStepTracking()">
+                                    📱 Allow & Start
+                                </button>
+                                <button class="secondary-btn" onclick="resetSteps()">
+                                    ↻ Reset
+                                </button>
+                            </div>
+
+                            <div style="color:#6e898d;font-size:10px;line-height:1.5;">
+                                <b style="color:#a9956b;">Prototype note:</b>
+                                This browser tracker estimates steps from your phone's motion sensor.
+                                It is for the NutriCare AI prototype and may differ from Google Fit,
+                                Apple Health, or a dedicated pedometer.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI CHAT -->
+
+                <div class="panel" style="margin-top:20px;" id="chatPanel">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <h3>NutriCare AI Assistant</h3>
+                            <p>Ask questions about your food and nutrition.</p>
+                        </div>
+
+                        <span style="color:var(--cyan);font-size:11px;">
+                            RAG READY
+                        </span>
+
+                    </div>
+
+
+                    <div class="chat">
+
+                        <div class="messages" id="messages">
+
+                            <div class="message bot">
+                                👋 Hello! I'm NutriCare AI. You can upload a
+                                food image, blood sugar report, or ask me a
+                                nutrition question.
+                            </div>
+
+                        </div>
+
+
+                        <div class="chat-input">
+
+                            <input
+                                type="text"
+                                id="chatInput"
+                                placeholder="Ask NutriCare AI..."
+                                onkeydown="if(event.key==='Enter') sendMessage()"
+                            >
+
+                            <button class="send-btn" onclick="sendMessage()">
+                                ➤
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= RIGHT ================= -->
+
+            <div>
+
+                <!-- REPORTS -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <h3>Recent Reports</h3>
+                            <p>Your uploaded documents</p>
+                        </div>
+
+                    </div>
+
+
+                    <div id="reportsList">
+
+                        <div class="report">
+
+                            <div class="report-icon">
+                                🩸
+                            </div>
+
+                            <div class="report-info">
+                                <strong>No reports yet</strong>
+                                <span>Upload your first report</span>
+                            </div>
+
+                            <div class="report-status">
+                                —
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MY FOOD PLAN (report → foods + 15-day chart) -->
+
+                <div class="panel" style="margin-top:20px;" id="dietPlanPanel">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <h3>🥗 My Food Plan</h3>
+                            <p>Foods you can eat from your report + 15-day chart</p>
+                        </div>
+
+                        <span id="planTargetBadge" style="font-size:11px; color:var(--cyan);">
+                            PERSONALISED
+                        </span>
+
+                    </div>
+
+
+                    <!-- Health conditions from your report -->
+
+                    <div id="conditionBox" style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:12px; font-size:12px; color:var(--muted);">
+                        <label style="display:flex; align-items:center; gap:5px; cursor:pointer;">
+                            <input type="checkbox" class="planCondition" value="hypertension"> 🩺 High BP
+                        </label>
+                        <label style="display:flex; align-items:center; gap:5px; cursor:pointer;">
+                            <input type="checkbox" class="planCondition" value="diabetes"> 🩸 Diabetes
+                        </label>
+                        <label style="display:flex; align-items:center; gap:5px; cursor:pointer;">
+                            <input type="checkbox" class="planCondition" value="obesity"> ⚖️ Weight loss
+                        </label>
+                    </div>
+
+
+                    <button
+                        class="primary-btn"
+                        style="width:100%; margin-bottom:10px;"
+                        onclick="loadFoodRecommendations()"
+                    >
+                        🥗 Foods I Can Eat
+                    </button>
+
+                    <button
+                        class="primary-btn"
+                        style="width:100%;"
+                        onclick="createFoodChart()"
+                    >
+                        📅 Create 15-Day Food Chart
+                    </button>
+
+
+                    <div id="planStatus" style="display:none; margin-top:12px; font-size:12px; color:var(--muted);"></div>
+
+
+                    <div id="recommendPanel" style="display:none; margin-top:14px;">
+                        <p id="recommendSummary" style="font-size:12.5px; color:#9fe7c5; line-height:1.6; margin-bottom:10px;"></p>
+                        <div id="recommendGroups"></div>
+                    </div>
+
+
+                    <div id="chartPanel" style="display:none; margin-top:14px;">
+                        <p id="chartSummary" style="font-size:12.5px; color:#9fe7c5; line-height:1.6; margin-bottom:10px;"></p>
+                        <div id="chartTable" style="max-height:420px; overflow:auto; border:1px solid rgba(0,245,212,.15); border-radius:10px; padding:6px;"></div>
+                        <div style="display:flex; gap:8px; margin-top:10px;">
+                            <button class="primary-btn" style="flex:1;" onclick="downloadFoodChartCSV()">📥 Download CSV</button>
+                            <button class="primary-btn" style="flex:1;" onclick="printFoodChart()">🖨️ Print / PDF</button>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- QUICK ACTIONS -->
+
+                <div class="panel" style="margin-top:20px;">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <h3>Quick Actions</h3>
+                            <p>Start an analysis</p>
+                        </div>
+
+                    </div>
+
+                    <button
+                        class="primary-btn"
+                        style="width:100%;margin-bottom:10px;"
+                        onclick="document.getElementById('foodImage').click()"
+                    >
+                        📷 Detect Food
+                    </button>
+
+                    <button
+                        class="primary-btn"
+                        style="width:100%;margin-bottom:10px;"
+                        onclick="document.getElementById('bloodReport').click()"
+                    >
+                        🩸 Upload Blood Report
+                    </button>
+
+                    <button
+                        class="primary-btn"
+                        style="width:100%; margin-bottom:10px;"
+                        onclick="createFoodChart()"
+                    >
+                        📅 15-Day Food Chart
+                    </button>
+
+                    <button
+                        class="primary-btn"
+                        style="width:100%;"
+                        onclick="focusChat()"
+                    >
+                        🤖 Ask AI
+                    </button>
+
+                </div>
+
+
+                <!-- SYSTEM -->
+
+                <div class="panel" style="margin-top:20px;">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <h3>AI Pipeline</h3>
+                            <p>NutriCare architecture</p>
+                        </div>
+
+                    </div>
+
+                    <div style="font-size:12px;line-height:2.1;color:var(--muted);">
+
+                        <div>📷 <b style="color:white;">Food Image</b></div>
+                        <div>↓</div>
+                        <div>🧠 <b style="color:white;">AI / ML Detection</b></div>
+                        <div>↓</div>
+                        <div>🥗 <b style="color:white;">Nutrition Database</b></div>
+                        <div>↓</div>
+                        <div>📚 <b style="color:white;">RAG Knowledge</b></div>
+                        <div>↓</div>
+                        <div>🧮 <b style="color:white;">Nutrition Calculation</b></div>
+                        <div>↓</div>
+                        <div>🤖 <b style="color:var(--cyan);">NutriCare Result</b></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <div class="disclaimer">
+            ⚠️ <strong>Important:</strong> NutriCare AI is intended to provide
+            nutrition and health information for research and educational
+            purposes. Uploaded health reports should not be treated as a
+            replacement for professional medical diagnosis or treatment.
+        </div>
+
+    </main>
+
+</div>
+
+
+ <script src="./script.js"></script>
+
+</body>
+</html>

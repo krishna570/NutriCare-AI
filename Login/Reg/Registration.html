@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriCare AI - Create Account</title>
+
+    <!-- Registration Stylesheet -->
+    <link rel="stylesheet" href="./registration.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         MOVING BACKGROUND (Matches Login Page)
+         ===================================================== -->
+    <div class="moving-bg" aria-hidden="true"></div>
+
+    <!-- Decorative Floating Circles -->
+    <div class="background-decoration" aria-hidden="true">
+        <div class="floating-circle circle-1"></div>
+        <div class="floating-circle circle-2"></div>
+        <div class="floating-circle circle-3"></div>
+        <div class="floating-circle circle-4"></div>
+    </div>
+
+    <!-- =====================================================
+         MAIN REGISTRATION CONTAINER
+         ===================================================== -->
+    <main class="registration-container">
+
+        <!-- =================================================
+             LEFT AI PANEL (Baymax & Branding)
+             ================================================= -->
+        <section class="ai-panel">
+            <div class="ai-content">
+
+                <!-- Brand Badge -->
+                <div class="ai-badge">
+                    ✦ AI POWERED NUTRITION
+                </div>
+
+                <!-- App Name -->
+                <h1>
+                    NutriCare <span>AI</span>
+                </h1>
+
+                <p class="ai-subtitle">
+                    Your intelligent companion for<br>
+                    <strong>personalized nutrition & wellness.</strong>
+                </p>
+
+                <!-- Baymax Circular Assistant Box (Reduced size to fit circle) -->
+                <div
+                    class="baymax-circle"
+                    id="baymaxBox"
+                    tabindex="0"
+                    role="button"
+                    aria-label="Activate NutriCare AI Baymax assistant"
+                >
+                    <img
+                        src="../4a7c82f1225811fee292489f489c3770.gif"
+                        alt="NutriCare AI Assistant Baymax"
+                        class="baymax"
+                    >
+
+                    <audio id="baymaxVoice" preload="auto">
+                        <source src="../MP3/tts-composition-2026-09-09-14-29-36.mp3" type="audio/mpeg">
+                    </audio>
+                </div>
+
+                <!-- AI Speech / Status Message -->
+                <div class="ai-message" id="aiMessage">
+                    <span class="message-dot"></span>
+                    <span id="messageText">Hi! I'm Baymax. Let's create your profile 🤖</span>
+                </div>
+
+                <!-- Feature Highlights -->
+                <div class="ai-features">
+                    <div class="ai-feature">
+                        <span>🧬</span>
+                        <small>Personalized</small>
+                    </div>
+                    <div class="ai-feature">
+                        <span>🥗</span>
+                        <small>Nutrition</small>
+                    </div>
+                    <div class="ai-feature">
+                        <span>🤖</span>
+                        <small>AI Powered</small>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- =================================================
+             RIGHT FORM PANEL (2-Step Registration with BMI)
+             ================================================= -->
+        <section class="form-panel">
+            <div class="form-wrapper">
+
+                <!-- Header -->
+                <div class="form-header">
+                    <span class="step-label" id="stepLabel">STEP 01 OF 02</span>
+                    <h2 id="formTitle">Create your account</h2>
+                    <p id="formSubtitle">Let's start with your basic information.</p>
+                </div>
+
+                <!-- Progress Indicator (2 Steps) -->
+                <div class="progress-container">
+                    <div class="progress-line">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-steps">
+                        <div class="progress-step active" id="pStep1">
+                            <span>1</span>
+                            <small>Account</small>
+                        </div>
+                        <div class="progress-step" id="pStep2">
+                            <span>2</span>
+                            <small>Health & BMI</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Registration Multi-step Form -->
+                <form id="registrationForm" novalidate>
+
+                    <!-- =============================================
+                         STEP 1: ACCOUNT DETAILS
+                         ============================================= -->
+                    <div class="form-step active" data-step="1" id="step1">
+
+                        <!-- Full Name -->
+                        <div class="input-group">
+                            <label for="fullName">Full Name</label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">👤</span>
+                                <input
+                                    type="text"
+                                    id="fullName"
+                                    placeholder="e.g. John Doe"
+                                    autocomplete="name"
+                                    required
+                                >
+                            </div>
+                            <small class="error-message" id="nameError"></small>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="input-group">
+                            <label for="email">Email Address</label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">✉️</span>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    placeholder="e.g. name@example.com"
+                                    autocomplete="email"
+                                    required
+                                >
+                            </div>
+                            <small class="error-message" id="emailError"></small>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="input-group">
+                            <label for="password">Create Password</label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">🔐</span>
+                                <input
+                                    type="password"
+                                    id="password"
+                                    placeholder="At least 8 characters"
+                                    autocomplete="new-password"
+                                    required
+                                >
+                                <button
+                                    type="button"
+                                    class="password-toggle"
+                                    id="passwordToggle"
+                                    aria-label="Toggle password visibility"
+                                >
+                                    👁
+                                </button>
+                            </div>
+
+                            <!-- Password Strength Indicator -->
+                            <div class="password-strength">
+                                <div class="strength-bar">
+                                    <span id="strengthFill"></span>
+                                </div>
+                                <small id="strengthText">Enter at least 8 characters with letters & numbers</small>
+                            </div>
+                            <small class="error-message" id="passwordError"></small>
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="input-group">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">🔒</span>
+                                <input
+                                    type="password"
+                                    id="confirmPassword"
+                                    placeholder="Re-enter your password"
+                                    autocomplete="new-password"
+                                    required
+                                >
+                            </div>
+                            <small class="error-message" id="confirmPasswordError"></small>
+                        </div>
+
+                        <!-- Continue Button -->
+                        <button
+                            type="button"
+                            class="primary-button"
+                            id="nextStep1"
+                        >
+                            Continue to Health & BMI
+                            <span>→</span>
+                        </button>
+
+                    </div>
+
+                    <!-- =============================================
+                         STEP 2: HEALTH STATS & LIVE BMI
+                         ============================================= -->
+                    <div class="form-step" data-step="2" id="step2">
+
+                        <div class="two-column">
+                            <!-- Age -->
+                            <div class="input-group">
+                                <label for="age">Age</label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon">🎂</span>
+                                    <input
+                                        type="number"
+                                        id="age"
+                                        min="10"
+                                        max="120"
+                                        placeholder="Age (yrs)"
+                                        required
+                                    >
+                                </div>
+                                <small class="error-message" id="ageError"></small>
+                            </div>
+
+                            <!-- Gender -->
+                            <div class="input-group">
+                                <label for="gender">Gender</label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon">⚧</span>
+                                    <select id="gender" required>
+                                        <option value="">Select Gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                        <option value="prefer_not_to_say">Prefer not to say</option>
+                                    </select>
+                                </div>
+                                <small class="error-message" id="genderError"></small>
+                            </div>
+                        </div>
+
+                        <div class="two-column">
+                            <!-- Height -->
+                            <div class="input-group">
+                                <label for="height">Height</label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon">📏</span>
+                                    <input
+                                        type="number"
+                                        id="height"
+                                        min="60"
+                                        max="250"
+                                        placeholder="Height"
+                                        required
+                                    >
+                                    <span class="unit">cm</span>
+                                </div>
+                                <small class="error-message" id="heightError"></small>
+                            </div>
+
+                            <!-- Weight -->
+                            <div class="input-group">
+                                <label for="weight">Weight</label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon">⚖️</span>
+                                    <input
+                                        type="number"
+                                        id="weight"
+                                        min="20"
+                                        max="350"
+                                        step="0.1"
+                                        placeholder="Weight"
+                                        required
+                                    >
+                                    <span class="unit">kg</span>
+                                </div>
+                                <small class="error-message" id="weightError"></small>
+                            </div>
+                        </div>
+
+                        <!-- Live BMI Calculation Card -->
+                        <div class="bmi-card" id="bmiCard">
+                            <div class="bmi-icon">🧬</div>
+                            <div class="bmi-info">
+                                <span>Your Body Mass Index (BMI)</span>
+                                <strong id="bmiValue">-- BMI</strong>
+                                <small id="bmiStatus">Enter height and weight above to calculate your BMI</small>
+                            </div>
+                        </div>
+
+                        <!-- Terms & Conditions Agreement -->
+                        <label class="agreement" for="termsCheckbox">
+                            <input
+                                type="checkbox"
+                                id="termsCheckbox"
+                                required
+                            >
+                            <span>
+                                I agree to NutriCare AI's
+                                <a href="#" onclick="return false;">Terms of Service</a>
+                                and
+                                <a href="#" onclick="return false;">Privacy Policy</a>
+                            </span>
+                        </label>
+                        <small class="error-message" id="termsError"></small>
+
+                        <!-- Step 2 Buttons -->
+                        <div class="button-row">
+                            <button
+                                type="button"
+                                class="secondary-button"
+                                id="backStep2"
+                            >
+                                ← Back
+                            </button>
+                            <button
+                                type="submit"
+                                class="primary-button"
+                                id="createAccountButton"
+                            >
+                                Create My Account
+                                <span>✦</span>
+                            </button>
+                        </div>
+
+                    </div>
+
+                </form>
+
+                <!-- Navigation link to Login -->
+                <div class="login-link">
+                    Already have an account?
+                    <a href="../Login.html" id="signInLink">
+                        Sign In
+                    </a>
+                </div>
+
+                <!-- Security Note -->
+                <div class="security-note">
+                    🔒 Your personal health data is protected and confidential.
+                </div>
+
+                <!-- Admin Link -->
+                <div style="margin-top: 10px; text-align: center; font-size: 11px;">
+                    <a href="../../Admin/admin.html" style="color: #64748b; text-decoration: none; font-weight: 600;">
+                        ⚙️ Admin Dashboard
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- =====================================================
+         SUCCESS MODAL OVERLAY
+         ===================================================== -->
+    <div class="success-modal-overlay" id="successModal" role="dialog" aria-modal="true">
+        <div class="success-card">
+            <div class="success-badge">✓</div>
+            <h3>Account Created!</h3>
+            <p id="successSubtitle">Welcome to NutriCare AI! Your personal health profile is ready.</p>
+            <div class="redirect-countdown">
+                Redirecting to login in <span id="countdown">3</span>s...
+            </div>
+            <div>
+                <a href="../Login.html" class="primary-button" style="margin-top: 18px; text-decoration: none;">
+                    Go to Login Now ➔
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Registration Logic -->
+    <script src="./registration.js"></script>
+
+</body>
+
+</html>

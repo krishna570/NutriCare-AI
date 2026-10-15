@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>NutriCare AI - Login</title>
+
+
+ 
+
+
+      <link rel="stylesheet" href="./Style.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         MOVING BACKGROUND
+         ===================================================== -->
+
+    <div
+        class="moving-bg"
+        aria-hidden="true">
+    </div>
+
+
+    <!-- =====================================================
+         MAIN CONTAINER
+         ===================================================== -->
+
+    <div class="container">
+
+
+        <!-- =================================================
+             LEFT AI SECTION
+             ================================================= -->
+
+        <div class="left-section">
+
+
+            <!-- DECORATIONS -->
+
+            <div class="circle one"></div>
+
+            <div class="circle two"></div>
+
+            <div class="circle three"></div>
+
+
+            <div class="particle p1"></div>
+
+            <div class="particle p2"></div>
+
+            <div class="particle p3"></div>
+
+
+            <!-- BRAND -->
+
+            <div class="brand">
+
+                <div class="ai-badge">
+                    ✦ AI POWERED NUTRITION
+                </div>
+
+
+                <h1>
+                    Nutri<span>Care</span> AI
+                </h1>
+
+
+                <p class="tagline">
+
+                    Your intelligent companion for<br>
+
+                    smarter nutrition & healthier living.
+
+                </p>
+
+            </div>
+
+
+            <!-- =================================================
+                 BAYMAX
+                 ================================================= -->
+
+            <div class="baymax-wrapper">
+
+
+                <div
+                    class="baymax-box"
+                    tabindex="0"
+                    role="button"
+                    aria-label="Activate NutriCare AI assistant"
+                >
+
+
+                    <!-- BAYMAX GIF -->
+
+                    <img
+                        src="./4a7c82f1225811fee292489f489c3770.gif"
+                        alt="NutriCare AI Assistant"
+                    >
+
+
+                    <!-- BAYMAX VOICE -->
+
+                    <audio
+                        id="baymaxVoice"
+                        preload="auto"
+                    >
+
+                        <source
+                            src="./MP3/tts-composition-2026-09-09-14-29-36.mp3"
+                            type="audio/mpeg"
+                        >
+
+                    </audio>
+
+
+                </div>
+
+
+                <div class="ai-status">
+
+                    <span class="status-dot"></span>
+
+                    <span>
+                        Hover to activate your AI companion
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             RIGHT LOGIN SECTION
+             ================================================= -->
+
+        <div class="right-section">
+
+
+            <h2>
+                Welcome Back! 👋
+            </h2>
+
+
+            <p class="welcome">
+                Login to continue your NutriCare journey.
+            </p>
+
+
+            <!-- NOTIFICATION ALERT (e.g. After Registration) -->
+            <div id="loginAlert" class="login-alert" role="alert"></div>
+
+
+            <!-- =================================================
+                 LOGIN FORM
+                 ================================================= -->
+
+            <form id="loginForm">
+
+
+                <!-- EMAIL -->
+
+                <div class="input-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="input-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- OPTIONS -->
+
+                <div class="options">
+
+
+                    <label class="remember">
+
+                        <input
+                            type="checkbox"
+                            id="remember"
+                        >
+
+                        Remember me
+
+                    </label>
+
+
+                    <a
+                        href="#"
+                        class="forgot"
+                    >
+                        Forgot Password?
+                    </a>
+
+
+                </div>
+
+
+                <!-- LOGIN BUTTON -->
+
+                <button
+                    type="submit"
+                    class="login-btn"
+                >
+                    Login
+                </button>
+
+
+            </form>
+
+
+            <!-- SIGNUP -->
+
+            <p class="signup">
+
+                Don't have an account?
+
+                <a href="./Reg/Registration.html" id="createAccountLink">
+                    Create Account
+                </a>
+
+            </p>
+
+
+            <!-- SECURITY -->
+
+            <p class="security">
+
+                🔒 Your nutrition data is protected
+
+            </p>
+
+
+            <!-- ADMIN LINK -->
+
+            <p style="margin-top: 14px; text-align: center; font-size: 11px;">
+                <a href="../Admin/admin.html" style="color: #64748b; text-decoration: none; font-weight: 600;">
+                    ⚙️ Admin Dashboard
+                </a>
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+         ===================================================== -->
+
+    <script src="./script.js"></script>
+
+
+</body>
+
+</html>

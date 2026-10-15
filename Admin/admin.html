@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriCare AI - Admin Dashboard</title>
+
+    <!-- Admin Stylesheet -->
+    <link rel="stylesheet" href="./admin.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         TOP NAVBAR
+         ===================================================== -->
+    <header class="admin-navbar">
+        <div class="nav-brand">
+            <span class="brand-icon">🥗</span>
+            <h1>NutriCare <span>AI</span></h1>
+            <span class="admin-badge">ADMIN DASHBOARD</span>
+        </div>
+
+        <div class="nav-actions">
+            <!-- Database Connection Status Badge -->
+            <div class="db-status-pill checking" id="dbStatusBadge" title="Click to test database ping">
+                <span class="status-indicator"></span>
+                <span id="dbStatusText">Checking backend...</span>
+            </div>
+
+            <!-- View MongoDB Architecture button -->
+            <button type="button" class="nav-btn secondary" id="showDbArchitectureBtn" title="Inspect MongoDB Collections and Schema">
+                🗄️ Database Structure
+            </button>
+
+            <!-- Links to customer pages -->
+            <a href="../Login/Login.html" class="nav-btn secondary" target="_blank">
+                🔑 Login Page
+            </a>
+            <a href="../Login/Reg/Registration.html" class="nav-btn primary" target="_blank">
+                ➕ New User Sign Up
+            </a>
+
+            <!-- Admin Profile & Logout -->
+            <div class="admin-user-menu" id="adminUserMenu" style="display: none;">
+                <span class="admin-user-email" id="adminUserEmail">admin@nutricare.ai</span>
+                <button type="button" class="logout-btn" id="adminLogoutBtn" title="Sign out of Admin Panel">
+                    Logout ➔
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- =====================================================
+         MAIN CONTENT AREA (Visible once authenticated)
+         ===================================================== -->
+    <main class="admin-container" id="adminMainContent" style="display: none;">
+
+        <!-- Page Header -->
+        <div class="dashboard-header">
+            <div>
+                <h2>User Profiles & BMI Analytics</h2>
+                <p>Live health records synced with the Node.js backend (<code id="dbNameLabel">backend/data/users.json</code>)</p>
+            </div>
+            <div class="header-actions">
+                <button type="button" class="action-btn" id="refreshBtn" title="Reload from database">
+                    🔄 Refresh
+                </button>
+                <button type="button" class="action-btn" id="exportCsvBtn" title="Export users as CSV spreadsheet">
+                    📥 Export CSV
+                </button>
+                <button type="button" class="action-btn" id="exportJsonBtn" title="Export users as JSON file">
+                    📋 Export JSON
+                </button>
+            </div>
+        </div>
+
+        <!-- =================================================
+             METRIC KPI CARDS
+             ================================================= -->
+        <section class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-icon users">👥</div>
+                <div class="kpi-info">
+                    <span>Total Registered</span>
+                    <strong id="kpiTotalUsers">0</strong>
+                    <small id="kpiUserChange">Total profiles in database</small>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-icon bmi">🧬</div>
+                <div class="kpi-info">
+                    <span>Average User BMI</span>
+                    <strong id="kpiAvgBmi">--</strong>
+                    <small id="kpiBmiCategory">Population average</small>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-icon normal">⚖️</div>
+                <div class="kpi-info">
+                    <span>Normal Weight Rate</span>
+                    <strong id="kpiNormalRate">0%</strong>
+                    <small id="kpiNormalCount">0 users in healthy range</small>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-icon database">🗄️</div>
+                <div class="kpi-info">
+                    <span>Active Storage</span>
+                    <strong id="kpiStorageMode">Connecting...</strong>
+                    <small id="kpiStorageHost">backend/data/users.json</small>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================
+             FILTER & SEARCH TOOLBAR
+             ================================================= -->
+        <section class="toolbar-card">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search users by full name or email address..."
+                >
+            </div>
+
+            <div class="filters-group">
+                <!-- BMI Category Filter -->
+                <div class="filter-item">
+                    <label for="bmiFilter">BMI Status:</label>
+                    <select id="bmiFilter">
+                        <option value="all">All BMI Statuses</option>
+                        <option value="Normal weight">Normal (18.5 - 24.9)</option>
+                        <option value="Underweight">Underweight (&lt; 18.5)</option>
+                        <option value="Overweight">Overweight (25 - 29.9)</option>
+                        <option value="Obese">Obese (&ge; 30)</option>
+                    </select>
+                </div>
+
+                <!-- Gender Filter -->
+                <div class="filter-item">
+                    <label for="genderFilter">Gender:</label>
+                    <select id="genderFilter">
+                        <option value="all">All Genders</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================
+             USERS DATA TABLE
+             ================================================= -->
+        <section class="table-card">
+            <div class="table-header">
+                <h3>Registered User Records (<span id="userCountLabel">0</span>)</h3>
+                <span class="live-indicator">● Real-time synced</span>
+            </div>
+
+            <div class="table-responsive">
+                <table class="users-table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Email Address</th>
+                            <th>Age / Gender</th>
+                            <th>Height</th>
+                            <th>Weight</th>
+                            <th>BMI & Classification</th>
+                            <th>Registered On</th>
+                            <th style="text-align: right;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <!-- Dynamic Rows Injected by admin.js -->
+                        <tr class="loading-row">
+                            <td colspan="8">
+                                <div class="table-loader">
+                                    <div class="spinner"></div>
+                                    <span>Fetching records from database...</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Empty State Display -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <div class="empty-icon">📂</div>
+                <h4>No User Profiles Found</h4>
+                <p>No registered users matched your search criteria or the database is currently empty.</p>
+                <a href="../Login/Reg/Registration.html" class="nav-btn primary" target="_blank" style="margin-top: 14px;">
+                    Register First User
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- =====================================================
+         ADMIN LOGIN GATEWAY MODAL (Shown when logged out)
+         ===================================================== -->
+    <div class="admin-login-overlay active" id="adminLoginOverlay">
+        <div class="admin-login-card">
+            <div class="admin-login-header">
+                <span class="admin-shield-icon">🛡️</span>
+                <h2>Admin Authentication</h2>
+                <p>Sign in with your administrator email & password to access the NutriCare AI database.</p>
+            </div>
+
+            <form id="adminLoginForm" novalidate>
+                <div class="login-input-group">
+                    <label for="adminEmail">Admin Email</label>
+                    <input
+                        type="email"
+                        id="adminEmail"
+                        value="admin@nutricare.ai"
+                        placeholder="admin@nutricare.ai"
+                        required
+                    >
+                </div>
+
+                <div class="login-input-group">
+                    <label for="adminPassword">Admin Password</label>
+                    <input
+                        type="password"
+                        id="adminPassword"
+                        value="admin123"
+                        placeholder="Enter password"
+                        required
+                    >
+                </div>
+
+                <div id="adminLoginError" class="login-error-msg" style="display: none;"></div>
+
+                <button type="submit" class="admin-submit-btn" id="adminLoginSubmitBtn">
+                    Unlock Dashboard ➔
+                </button>
+            </form>
+
+            <div class="admin-credentials-hint">
+                <span>Default Credentials:</span>
+                <code>admin@nutricare.ai</code> / <code>admin123</code>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================
+         MONGODB ARCHITECTURE INSPECTOR MODAL
+         ===================================================== -->
+    <div class="modal-overlay" id="dbArchitectureModal" role="dialog" aria-modal="true">
+        <div class="modal-card wide">
+            <div class="modal-header">                    <h3>🗄️ Database Architecture (<code style="color: var(--green-dark);">users</code>)</h3>
+                <button type="button" class="close-modal" id="closeDbModal">&times;</button>
+            </div>
+            <div class="modal-body" id="dbArchitectureContent">
+                <!-- Dynamically populated by admin.js -->
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================
+         USER DETAIL VIEW MODAL
+         ===================================================== -->
+    <div class="modal-overlay" id="userDetailModal" role="dialog" aria-modal="true">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>User Profile Details</h3>
+                <button type="button" class="close-modal" id="closeDetailModal">&times;</button>
+            </div>
+            <div class="modal-body" id="modalDetailContent">
+                <!-- Injected by admin.js -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel Logic -->
+    <script src="./admin.js"></script>
+
+</body>
+
+</html>
