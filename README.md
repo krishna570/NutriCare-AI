@@ -1,4 +1,4 @@
-# NutriCare AI — Smart Nutrition Assistant
+# NutriCare AI ΓÇö Smart Nutrition Assistant
 
 A full-stack nutrition & health assistant: food-image detection, blood/health report
 analysis, a RAG chat bot over a 151k-document nutrition knowledge base, personalised
@@ -36,11 +36,11 @@ ollama pull llama3.2        ; if "ollama list" does not show it
 
 It opens two terminal windows:
 
-1. **NutriCare - Node (8000)** → runs `npm start`
-2. **NutriCare - Python RAG (5000)** → runs `python rag_service.py`
+1. **NutriCare - Node (8000)** ΓåÆ runs `npm start`
+2. **NutriCare - Python RAG (5000)** ΓåÆ runs `python rag_service.py`
 
 Wait until the Python window shows `Started server process` **and** finishes loading
-the Chroma knowledge base (about 10–30 seconds the first time), then open:
+the Chroma knowledge base (about 10ΓÇô30 seconds the first time), then open:
 
 ```
 http://127.0.0.1:8000
@@ -49,18 +49,18 @@ http://127.0.0.1:8000
 ### Manual start (two terminals, same result)
 
 ```bat
-:: Terminal 1 — Node backend (port 8000)
+:: Terminal 1 ΓÇö Node backend (port 8000)
 cd /d "D:\JNEC\Nutricare AI\backend"
 npm start
 ```
 
 ```bat
-:: Terminal 2 — Python RAG service (port 5000)
+:: Terminal 2 ΓÇö Python RAG service (port 5000)
 cd /d "D:\JNEC\Nutricare AI\backend"
 python rag_service.py
 ```
 
-> ⚠️ **Port 5000 must run `backend\rag_service.py`** — not `services\ml_api.py`
+> ΓÜá∩╕Å **Port 5000 must run `backend\rag_service.py`** ΓÇö not `services\ml_api.py`
 > and not `app.py`. Only `rag_service.py` provides `/rag-chat`, `/predict-food`,
 > `/food-recommend` and `/plan/15-day`. If the wrong file runs, the chat and the
 > food chart fail with *"Food chart service returned an error."*
@@ -86,24 +86,24 @@ curl http://127.0.0.1:5000/
 
 ## 4. Log in and use the app
 
-- Open `http://127.0.0.1:8000` — you are redirected to the dashboard
-  (register first via **Login → Register**; OTP is not required).
+- Open `http://127.0.0.1:8000` ΓÇö you are redirected to the dashboard
+  (register first via **Login ΓåÆ Register**; OTP is not required).
 - **Test account:** `krishna@test.com` / `123456`
 
 What you can do on the dashboard:
 
 | Feature | Where |
 |---|---|
-| 📷 Food image detection (43-class ViT, nutrition breakdown) | Upload & Analyze → Food Image |
-| 🩸 Blood sugar / health report upload & analysis | Upload & Analyze |
-| 🤖 Ask the RAG chat bot (answers in ~5–60 s via Ollama) | NutriCare AI Assistant |
-| 🥗 Foods I Can Eat — report-based recommendations | My Food Plan → Foods I Can Eat |
-| 📅 15-day daily food chart + CSV download + Print/PDF | My Food Plan → Create 15-Day Food Chart |
-| 👟 Live step tracking (phone motion sensor) | Live Step Tracker |
-| 👤 BMI shown in the top bar; click avatar to log out | Navbar |
+| ≡ƒô╖ Food image detection (43-class ViT, nutrition breakdown) | Upload & Analyze ΓåÆ Food Image |
+| ≡ƒ⌐╕ Blood sugar / health report upload & analysis | Upload & Analyze |
+| ≡ƒñû Ask the RAG chat bot (answers in ~5ΓÇô60 s via Ollama) | NutriCare AI Assistant |
+| ≡ƒÑù Foods I Can Eat ΓÇö report-based recommendations | My Food Plan ΓåÆ Foods I Can Eat |
+| ≡ƒôà 15-day daily food chart + CSV download + Print/PDF | My Food Plan ΓåÆ Create 15-Day Food Chart |
+| ≡ƒæƒ Live step tracking (phone motion sensor) | Live Step Tracker |
+| ≡ƒæñ BMI shown in the top bar; click avatar to log out | Navbar |
 | Admin: users / db info | `/Admin/admin.html` |
 
-On a phone: the sidebar collapses behind the **☰** menu button; the 15-day chart
+On a phone: the sidebar collapses behind the **Γÿ░** menu button; the 15-day chart
 scrolls sideways inside its box.
 
 ---
@@ -115,7 +115,7 @@ scrolls sideways inside its box.
 | POST | `/api/chat` | RAG chat (forwards user `profile` for personalised answers) |
 | POST | `/api/recommend` | Foods you can eat (eat more / moderate / limit) |
 | POST | `/api/plan` | 15-day food chart (proxies Python `/plan/15-day`) |
-| POST | `/api/analyze-food` | Food image → nutrition |
+| POST | `/api/analyze-food` | Food image ΓåÆ nutrition |
 | GET | `/api/health`, `/api/ml/health` | Service health |
 | POST | Python `:5000/rag-chat`, `/predict-food`, `/food-recommend`, `/plan/15-day` | RAG / ML internals |
 
@@ -125,23 +125,23 @@ scrolls sideways inside its box.
 
 ```
 Nutricare AI/
-├── start.bat                  ← double-click to start both services
-├── README.md                  ← this file
-├── NutriCare-AI-Run-Guide.pdf ← printable step-by-step guide
-├── Main/                      ← dashboard (HTML/CSS/JS)
-├── Login/                     ← login + registration (OTP removed)
-├── Admin/                     ← admin dashboard
-├── backend/
-│   ├── server.js              ← Node server (port 8000): static + API proxy
-│   ├── rag_service.py         ← Python service (port 5000): RAG, ML, food plan
-│   ├── services/ml_api.py     ← 43-class food classifier (loaded BY rag_service)
-│   ├── data/users.json        ← user accounts (file storage)
-│   └── requirements.txt
-├── RAG/
-│   ├── chroma_db/             ← Chroma vector DB (151,210 docs, 384-dim, L2)
-│   ├── data/                  ← nutrition master CSV + QA dataset
-│   └── create_database.py     ← rebuild the knowledge base (optional)
-└── test_images/               ← sample food images for testing
+Γö£ΓöÇΓöÇ start.bat                  ΓåÉ double-click to start both services
+Γö£ΓöÇΓöÇ README.md                  ΓåÉ this file
+Γö£ΓöÇΓöÇ NutriCare-AI-Run-Guide.pdf ΓåÉ printable step-by-step guide
+Γö£ΓöÇΓöÇ Main/                      ΓåÉ dashboard (HTML/CSS/JS)
+Γö£ΓöÇΓöÇ Login/                     ΓåÉ login + registration (OTP removed)
+Γö£ΓöÇΓöÇ Admin/                     ΓåÉ admin dashboard
+Γö£ΓöÇΓöÇ backend/
+Γöé   Γö£ΓöÇΓöÇ server.js              ΓåÉ Node server (port 8000): static + API proxy
+Γöé   Γö£ΓöÇΓöÇ rag_service.py         ΓåÉ Python service (port 5000): RAG, ML, food plan
+Γöé   Γö£ΓöÇΓöÇ services/ml_api.py     ΓåÉ 43-class food classifier (loaded BY rag_service)
+Γöé   Γö£ΓöÇΓöÇ data/users.json        ΓåÉ user accounts (file storage)
+Γöé   ΓööΓöÇΓöÇ requirements.txt
+Γö£ΓöÇΓöÇ RAG/
+Γöé   Γö£ΓöÇΓöÇ chroma_db/             ΓåÉ Chroma vector DB (151,210 docs, 384-dim, L2)
+Γöé   Γö£ΓöÇΓöÇ data/                  ΓåÉ nutrition master CSV + QA dataset
+Γöé   ΓööΓöÇΓöÇ create_database.py     ΓåÉ rebuild the knowledge base (optional)
+ΓööΓöÇΓöÇ test_images/               ΓåÉ sample food images for testing
 ```
 
 ---
@@ -152,7 +152,7 @@ Nutricare AI/
 |---|---|---|
 | *"Food chart service returned an error."* | Wrong Python file on port 5000 | Stop it; run `python rag_service.py` (see start.bat) |
 | `EADDRINUSE` on 8000/5000 | Old instance still running | Close old terminal windows (or end the process on that port) |
-| Chat answers slowly (5–60 s) | Ollama generation time (normal) | Wait; keep `llama3.2` installed |
+| Chat answers slowly (5ΓÇô60 s) | Ollama generation time (normal) | Wait; keep `llama3.2` installed |
 | Chat says no context / weak answers | Ollama not running | Start `ollama serve`, check `ollama list` |
 | Python exits on startup | Missing packages | `pip install -r backend\requirements.txt` |
 | First chart/recommendation click is slow | Model + Chroma loading | Only on cold start; later calls take <1 s |
@@ -168,10 +168,10 @@ Close both terminal windows started by `start.bat`, or press `Ctrl+C` inside eac
 
 ## Tech stack
 
-Frontend: vanilla HTML/CSS/JS · Backend: Node.js (Express + Axios proxy) ·
-AI: FastAPI + LangChain + Chroma (all-MiniLM-L6-v2) + Ollama (llama3.2) ·
+Frontend: vanilla HTML/CSS/JS ┬╖ Backend: Node.js (Express + Axios proxy) ┬╖
+AI: FastAPI + LangChain + Chroma (all-MiniLM-L6-v2) + Ollama (llama3.2) ┬╖
 ML: PyTorch ViT food classifier (43 classes) + nutrition CSV database
 
-> ⚠️ NutriCare AI is for research and educational purposes. Recommendations come
+> ΓÜá∩╕Å NutriCare AI is for research and educational purposes. Recommendations come
 > from a dataset classifier and are **not** a substitute for professional medical
 > advice.
